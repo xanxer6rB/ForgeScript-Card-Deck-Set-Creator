@@ -110,8 +110,9 @@ class UpdateCardsfolderWindow(QWidget):
         self.message_box.append(message)  # Append instead of setText to show live progress
 
     def create_backup(self):
-        directory_path = "/mnt/Data/coding_projects/python/forgeBuilderApp/forgeScriptSearch_DeckBuilder"
-        output_zip = "/mnt/Data/coding_projects/python/forgeScriptSearch_DeckBuilder_PyQt_BKP.zip"
+        # Add directory path of where you have the app stored
+        directory_path = "ForgeScript-Card-Deck-Set-Creator/forgeScriptSearch_DeckBuilder"
+        output_zip = "./app/bkp/forgeScriptSearch_DeckBuilder_BKP.zip"
 
         if not os.path.exists(directory_path):
             self.message_box.setText(f"The directory {directory_path} does not exist.")
