@@ -142,7 +142,7 @@ class CustomCardCreatorWindow(QWidget):
         return sorted(subdirectories)
 
     def populate_image_directory_combobox(self):
-        base_path = './app/custom_created/set_images/'
+        base_path = './app/set_images/'
         if os.path.exists(base_path) and os.path.isdir(base_path):
             folders = self.get_all_subdirectories(base_path)
             self.image_directory_combobox.addItems(folders)
@@ -156,7 +156,7 @@ class CustomCardCreatorWindow(QWidget):
 
     def update_image_display_and_files(self):
         selected_folder = self.image_directory_combobox.currentText()
-        images_dir = os.path.join('./app/custom_created/set_images/', selected_folder)
+        images_dir = os.path.join('./app/set_images/', selected_folder)
         
         if not os.path.exists(images_dir) or not os.listdir(images_dir):  # Check if the directory exists and has files
             self.image_display_label.setText("Directory is empty or does not exist.")
