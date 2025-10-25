@@ -110,18 +110,34 @@ class UpdateCardsfolderWindow(QWidget):
         self.message_box.append(message)  # Append instead of setText to show live progress
 
     def create_backup(self):
-        # Add directory path of where you have the app stored
-        directory_path = "ForgeScript-Card-Deck-Set-Creator/forgeScriptSearch_DeckBuilder"
-        output_zip = "./app/bkp/forgeScriptSearch_DeckBuilder_BKP.zip"
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        directory_path = os.path.join(script_dir, '..', 'custom_created')
+        output_dir = "./app/bkp"
 
         if not os.path.exists(directory_path):
             self.message_box.setText(f"The directory {directory_path} does not exist.")
             return
-        
-        with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for root, dirs, files in os.walk(directory_path):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    zipf.write(file_path, os.path.relpath(file_path, directory_path))
 
-        self.message_box.setText("Backup complete...")
+        # Use QFileDialog to get the save file name
+        options = QFileDialog.Options()
+        options |= QFileDialog.ShowDirsOnly
+        output_zip, _ = QFileDialog.getSaveFileName(self, "Save Backup File", output_dir, "Zip Files (*.zip);;All Files (*)", options=options)
+
+        if not output_zip:
+            return  # User canceled the file dialog
+
+        # Ensure the file has a .zip extension
+        if not output_zip.endswith('.zip'):
+            output_zip += '.zip'
+
+        try:
+            with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for root, dirs, files in os.walk(directory_path):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        zipf.write(file_path, os.path.relpath(file_path, directory_path))
+
+            self.message_box.setText(f"Backup complete: {output_zip}")
+        except Exception as e:
+            self.message_box.setText(f"Failed to create backup: {str(e)}")
