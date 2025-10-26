@@ -1,5 +1,5 @@
 # ForgeScript-Card-Deck-Set-Creator
-An app that users can search card scripts, create custom cards, custom sets and decks
+A PyQt5 app that users can search through Forge card scripts, create custom cards, custom sets and decks
 
 The res folder contains the cardsfolder that can be updated within the app
 
